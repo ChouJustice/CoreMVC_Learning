@@ -1,0 +1,43 @@
+﻿@model List<WebCoreLab.Controllers.ProductController.Product>
+
+@{
+    var mainProduct = Model.First(); //左側較大的商品，取商品資料的第一個商品
+    var sideProductList = Model.Skip(1).Take(8); //右側較小的商品，取第1個之外的剩下8個商品
+}
+
+@section topCSS {
+    <style>
+        .area-title {
+            color: red;
+        }
+    </style>
+}
+
+<div class="container pt-3">
+    <h2 class="area-title">商品區</h2>
+    <div class="row latestProduct">
+        <div class="col-12 col-md-4">
+            <a href="/Product/Detail/@mainProduct.Id" class="card text-white rounded-3 overflow-hidden h-100">
+                <img src="@mainProduct.Image" class="h-100" alt="">
+                <div class="card-img-overlay d-flex flex-column justify-content-end">
+                    <div class="card-title text-black bg-white p-2 rounded opacity-75">
+                        <h3>@mainProduct.Name</h3>
+                        <p>@mainProduct.Description</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-8 d-flex flex-wrap align-items-stretch g-1">
+            @foreach(var product in sideProductList) {
+                <div class="col-12 col-md-3">
+                    <a href="/Product/Detail/@product.Id" class="card text-white rounded-3 overflow-hidden">
+                        <img src="@product.Image" alt="">
+                        <div class="card-img-overlay d-flex flex-column justify-content-end">
+                            <h5 class="card-title text-black bg-white p-2 rounded opacity-75"><b>@product.Name</b></h5>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
